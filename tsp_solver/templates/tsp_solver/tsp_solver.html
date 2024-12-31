@@ -4,31 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TSP Solver</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #0056b3;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        textarea {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #0056b3;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #004494;
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: #0056b3;
+        }
+
+        p {
+            line-height: 1.5;
+        }
+
+        img {
+            margin-top: 10px;
+            display: block;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body>
-    <h1>Traveling Salesman Problem Solver</h1>
-    <form method="post">
-        {% csrf_token %}
-        <label for="locations">Locations (comma-separated):</label><br>
-        <textarea id="locations" name="locations" rows="3" cols="50" placeholder="Enter locations (e.g., A,B,C,D)"></textarea><br><br>
+    <div class="container">
+        <h1>Traveling Salesman Problem Solver</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="locations">Locations (comma-separated):</label>
+            <textarea id="locations" name="locations" rows="3" cols="50" placeholder="Enter locations (e.g., A,B,C,D)"></textarea>
 
-        <label for="distances">Distance Matrix (row by row, comma-separated):</label><br>
-        <textarea id="distances" name="distances" rows="5" cols="50" placeholder="Enter distance matrix"></textarea><br><br>
+            <label for="distances">Distance Matrix (row by row, comma-separated):</label>
+            <textarea id="distances" name="distances" rows="5" cols="50" placeholder="Enter distance matrix"></textarea>
 
-        <button type="submit">Solve</button>
-    </form>
+            <button type="submit">Solve</button>
+        </form>
 
-    {% if result %}
-        {% if result.error %}
-            <h2>Error:</h2>
-            <p>{{ result.error }}</p>
-        {% else %}
-            <h2>Result:</h2>
-            <p><strong>Optimal Path:</strong> {{ result.path }}</p>
-            <p><strong>Total Cost:</strong> {{ result.cost }}</p>
-            <h3>Graph:</h3>
-            <img src="data:image/png;base64,{{ graph_base64 }}" alt="TSP Graph" style="max-width: 100%; height: auto;">
+        {% if result %}
+            {% if result.error %}
+                <h2>Error:</h2>
+                <p>{{ result.error }}</p>
+            {% else %}
+                <h2>Result:</h2>
+                <p><strong>Optimal Path:</strong> {{ result.path }}</p>
+                <p><strong>Total Cost:</strong> {{ result.cost }}</p>
+                <h3>Graph:</h3>
+                <img src="data:image/png;base64,{{ graph_base64 }}" alt="TSP Graph">
+            {% endif %}
         {% endif %}
-    {% endif %}
+    </div>
 </body>
 </html>
